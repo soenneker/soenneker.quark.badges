@@ -1,14 +1,15 @@
 @using Soenneker.Quark.Badges.Enums
-@using Soenneker.Quark.Enums.Colors
+@using Soenneker.Quark.Dtos.Colors
 @using Soenneker.Quark.Enums.Size
 @using Soenneker.Quark.Spans
 @inherits Soenneker.Quark.Components.Element
 
-<Span @attributes="BuildAttributes()">
+<Span @attributes="BuildAttributes()" >
     @ChildContent
 </Span>
 
 @code {
+
     [Parameter]
     public BadgeType Type { get; set; } = BadgeType.Badge;
 
@@ -33,7 +34,10 @@
 
     private string? GetColorClass()
     {
-        return $"bg-{Color.Value}";
+        if (Color.IsTheme)
+            return $"bg-{Color.Theme!.Value}";
+
+        return null;
     }
 
     private string? GetSizeClass()
@@ -64,9 +68,9 @@
         if (Rounded)
             baseClasses = $"{baseClasses} rounded";
 
-        attributes["class"] = AppendToClass(attributes.GetValueOrDefault("class")
-            ?.ToString(), baseClasses);
+        AppendToClassAttr(attributes, baseClasses);
 
         return attributes;
     }
+
 }
