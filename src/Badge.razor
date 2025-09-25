@@ -1,7 +1,9 @@
 @using Soenneker.Quark.Badges.Enums
-@using Soenneker.Quark.Dtos.Colors
+@using Soenneker.Quark.Components.Builders
+@using Soenneker.Quark.Components.Builders.Colors
 @using Soenneker.Quark.Enums.Size
 @using Soenneker.Quark.Spans
+
 @inherits Soenneker.Quark.Components.Element
 
 <Span @attributes="BuildAttributes()" >
@@ -14,7 +16,7 @@
     public BadgeType Type { get; set; } = BadgeType.Badge;
 
     [Parameter]
-    public Color Color { get; set; } = Color.Primary;
+    public CssValue<ColorBuilder>? Color { get; set; }
 
     [Parameter]
     public Size Size { get; set; } = Size.Default;
@@ -29,13 +31,21 @@
 
         if (Type == BadgeType.Dot)
             return "badge-dot";
+
         return null;
     }
 
     private string? GetColorClass()
     {
-        if (Color.IsTheme)
-            return $"bg-{Color.Theme!.Value}";
+        if (Color is not null && !Color.Value.IsEmpty)
+        {
+            string colorValue = Color.Value.ToString();
+
+            if (!string.IsNullOrEmpty(colorValue))
+            {
+                return Color.Value.IsCssClass ? $"bg-{colorValue}" : null;
+            }
+        }
 
         return null;
     }
@@ -44,6 +54,7 @@
     {
         if (Size != Size.Default)
             return $"badge-{Size.Value}";
+
         return null;
     }
 
