@@ -1,6 +1,6 @@
 using Intellenum;
 
-namespace Soenneker.Quark.Badges.Enums;
+namespace Soenneker.Quark;
 
 /// <summary>
 /// Badge type enumeration.
