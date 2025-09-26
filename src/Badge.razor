@@ -1,8 +1,4 @@
-@using Soenneker.Quark.Badges.Enums
-@using Soenneker.Quark.Components.Builders
-@using Soenneker.Quark.Components.Builders.Colors
-@using Soenneker.Quark.Enums.Size
-@using Soenneker.Quark.Spans
+@using Soenneker.Quark.Enums
 
 @inherits Soenneker.Quark.Element
 
@@ -11,6 +7,7 @@
 </Span>
 
 @code {
+	public override string? Name { get; set; } = "Badge";
 
     [Parameter]
     public BadgeType Type { get; set; } = BadgeType.Badge;
