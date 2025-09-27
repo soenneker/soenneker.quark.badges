@@ -16,7 +16,7 @@
     public CssValue<ColorBuilder>? Color { get; set; }
 
     [Parameter]
-    public Size Size { get; set; } = Size.Default;
+    public CssValue<SizeBuilder>? Size { get; set; } = Size.Default;
 
     [Parameter]
     public bool Rounded { get; set; }
@@ -49,7 +49,7 @@
 
     private string? GetSizeClass()
     {
-        if (Size != Size.Default)
+        if (Size != null && !Size.Value.IsEmpty)
             return $"badge-{Size.Value}";
 
         return null;
